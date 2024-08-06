@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { FlatList } from 'react-native';
+import Card from '~/src/components/home/card';
 import Header from '~/src/components/home/header';
+import Separator from '~/src/components/separator';
+import Title from '~/src/components/title';
 
 import Api from '~/src/services/api';
 import { ArticleProps } from '~/src/types/article';
@@ -28,22 +31,27 @@ export default function Home() {
   useEffect(() => {getApiData()}, []);
 
   return (
-    <>
-      <View style={styles.container}>
+    <View className={'px-2'}>
+      <View className={'mb-24 mt-14 w-full justify-center items-center'}>
         <Header />
       </View>
+   
 
       <View>
         <SafeAreaView>
-          <Text>Lista</Text>
-          <FlatList 
+          <Title title='Principais manchetes do dia' />
+          <FlatList       
+            className='mt-6'
+            ItemSeparatorComponent={Separator}
             data={data.articles}
             keyExtractor={(item) => item.url} 
-            renderItem={({item}) => <Text className={'py-8'}>{item.author}</Text>}
+            renderItem={({item}) => <Card item = {item} />}
           />
         </SafeAreaView>
       </View>
-    </>
+
+
+    </View>
   );
 }
 
