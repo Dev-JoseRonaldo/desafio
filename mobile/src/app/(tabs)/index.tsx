@@ -1,14 +1,47 @@
-import { Stack } from 'expo-router';
-import { StyleSheet, View } from 'react-native';
+import { useEffect, useState } from 'react';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { FlatList } from 'react-native';
+import Header from '~/src/components/home/header';
 
-import { ScreenContent } from '~/src/components/ScreenContent';
+import Api from '~/src/services/api';
+import { ArticleProps } from '~/src/types/article';
+
+interface DataProps {
+  status: string,
+  totalResults: string,
+  articles: ArticleProps[]
+}
 
 export default function Home() {
+  const [data, setData] = useState({} as DataProps);
+
+  async function getApiData() {
+    try {
+      const url = `/v2/top-headlines?country=br&apiKey=${process.env.EXPO_PUBLIC_API_KEY}`;
+      const response = await Api.get(url);
+      setData(response.data);
+    } catch(e) {
+      console.error(e);
+    }
+  }
+
+  useEffect(() => {getApiData()}, []);
+
   return (
     <>
-      <Stack.Screen options={{ title: 'Tab One' }} />
       <View style={styles.container}>
-        <ScreenContent path="app/(tabs)/index.tsx" title="Tab One" />
+        <Header />
+      </View>
+
+      <View>
+        <SafeAreaView>
+          <Text>Lista</Text>
+          <FlatList 
+            data={data.articles}
+            keyExtractor={(item) => item.url} 
+            renderItem={({item}) => <Text className={'py-8'}>{item.author}</Text>}
+          />
+        </SafeAreaView>
       </View>
     </>
   );
@@ -17,6 +50,8 @@ export default function Home() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
     padding: 24,
   },
 });

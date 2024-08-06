@@ -6,9 +6,8 @@ import { ScreenContent } from '~/src/components/ScreenContent';
 export default function Home() {
   return (
     <>
-      <Stack.Screen options={{ title: 'Tab Two' }} />
       <View style={styles.container}>
-        <ScreenContent path="app/(tabs)/two.tsx" title="Tab Two" />
+        {/* <ScreenContent path="app/(tabs)/two.tsx" title="Search" /> */}
       </View>
     </>
   );
@@ -17,6 +16,7 @@ export default function Home() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#fff',
     padding: 24,
   },
 });
