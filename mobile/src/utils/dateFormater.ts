@@ -10,20 +10,20 @@ export function timeForNow(dateString: string): string {
   }
 
   const days = differenceInDays(now, date);
-  if (days < 6) {
+  if (days < 7) {
     return `há ${days} dia${days !== 1 ? 's' : ''} atrás`;
   }
 
   const weeks = differenceInWeeks(now, date);
-  if (weeks < 4) {
+  if (weeks < 5) {
     return `há ${weeks} semana${weeks !== 1 ? 's' : ''} atrás`;
   }
 
   const months = differenceInMonths(now, date);
-  if (months < 12) {
+  if (months < 13) {
     return `há ${months} mês${months !== 1 ? 'es' : ''} atrás`;
   }
 
   const years = differenceInYears(now, date);
-  return `há {years} ano`;
+  return `há ${years} ano`;
 }
