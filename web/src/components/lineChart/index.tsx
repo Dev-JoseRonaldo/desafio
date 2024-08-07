@@ -5,7 +5,7 @@ interface LineChartProps {
   data: { date: string, count: number }[]
 }
 
-export const LineChart: React.FC<LineChartProps> = ({ data }) => {
+export const LineChart = ({ data }: LineChartProps) => {
   const series = [
     {
       name: "Number of Articles",
