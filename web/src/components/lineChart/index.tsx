@@ -40,7 +40,7 @@ export const LineChart = ({ data }: LineChartProps) => {
       curve: 'smooth'
     },
     title: {
-      text: 'Number of Articles Over Time',
+      text: 'Número de Artigos publicados, por data, em determinado período',
       align: 'left'
     },
     grid: {
@@ -56,12 +56,12 @@ export const LineChart = ({ data }: LineChartProps) => {
     xaxis: {
       categories: data.map(item => item.date),
       title: {
-        text: 'Date'
+        text: 'Data'
       }
     },
     yaxis: {
       title: {
-        text: 'Number of Articles'
+        text: 'Número de Artigos'
       },
       min: 0
     },

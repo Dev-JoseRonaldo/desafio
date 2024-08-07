@@ -25,19 +25,22 @@ export const SearchForm = ({
       placeholder="Palavra chave" 
       value={keyword}
       onChange={(e) => setKeyword(e.target.value)} 
+      className="p-2"
     />
     <input 
       type="date" 
       placeholder="Data de início" 
       value={startDate}
-      onChange={(e) => setStartDate(e.target.value)} 
+      onChange={(e) => setStartDate(e.target.value)}
+      className="p-2"
     />
     <input 
       type="date" 
       placeholder="Data de fim" 
       value={endDate}
       onChange={(e) => setEndDate(e.target.value)} 
+      className="p-2"
     />
-    <button type="submit">Enviar</button>
+    <button type="submit" className="bg-white p-2">Enviar</button>
   </form>
 );

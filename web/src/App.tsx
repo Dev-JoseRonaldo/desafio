@@ -3,8 +3,10 @@ import api from "./services/api";
 import { DataProps, ArticleProps } from "./types/data";
 import { LineChart } from "./components/lineChart";
 import { SearchForm } from "./components/searchForm";
+import { GraphContainer } from "./components/graphContainer";
+import { GraphTitle } from "./components/graphTitle";
 
-const App: React.FC = () => {
+function App() {
   const [data, setData] = useState<DataProps | null>(null);
   const [keyword, setKeyword] = useState('');
   const [startDate, setStartDate] = useState('');
@@ -53,16 +55,22 @@ const App: React.FC = () => {
   return (
     <main className="flex flex-col w-screen h-screen p-4 items-center justify-top gap-20"> 
       <h1 className="text-6xl font-bold">News Explorer</h1>
-      <SearchForm 
-        keyword={keyword}
-        startDate={startDate}
-        endDate={endDate}
-        setKeyword={setKeyword}
-        setStartDate={setStartDate}
-        setEndDate={setEndDate}
-        onSubmit={handleSubmit}
-      />
-      <LineChart data={chartData} />
+
+      <GraphContainer>
+        <GraphTitle 
+          text="1) Pesquise a quantidade de notícias relacionadas à palavra-chave durante um determinado período de tempo." 
+        />
+        <SearchForm 
+          keyword={keyword}
+          startDate={startDate}
+          endDate={endDate}
+          setKeyword={setKeyword}
+          setStartDate={setStartDate}
+          setEndDate={setEndDate}
+          onSubmit={handleSubmit}
+        />
+        <LineChart data={chartData} />
+      </GraphContainer>
     </main>
   );
 }
