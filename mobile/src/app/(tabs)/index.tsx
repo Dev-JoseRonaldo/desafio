@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 import { FlatList } from 'react-native';
 import Card from '~/src/components/home/card';
 import Header from '~/src/components/home/header';
@@ -7,13 +7,7 @@ import Separator from '~/src/components/separator';
 import Title from '~/src/components/title';
 
 import Api from '~/src/services/api';
-import { ArticleProps } from '~/src/types/article';
-
-interface DataProps {
-  status: string,
-  totalResults: string,
-  articles: ArticleProps[]
-}
+import { DataProps } from '~/src/types/data';
 
 export default function Home() {
   const [data, setData] = useState({} as DataProps);
@@ -31,12 +25,11 @@ export default function Home() {
   useEffect(() => {getApiData()}, []);
 
   return (
-    <View className={'px-2'}>
+    <View className={'bg-white flex-1 items-center p-6 px-2'}>
       <View className={'mb-24 mt-14 w-full justify-center items-center'}>
         <Header />
       </View>
-   
-
+      
       <View>
         <SafeAreaView>
           <Title title='Principais manchetes do dia' />
@@ -49,17 +42,6 @@ export default function Home() {
           />
         </SafeAreaView>
       </View>
-
-
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    padding: 24,
-  },
-});

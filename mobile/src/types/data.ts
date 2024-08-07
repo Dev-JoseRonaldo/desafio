@@ -1,3 +1,9 @@
+export interface DataProps {
+  status: string,
+  totalResults: string,
+  articles: ArticleProps[]
+}
+
 export interface ArticleProps {
   source: {
     id: string,
