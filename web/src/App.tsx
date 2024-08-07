@@ -1,25 +1,48 @@
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, useEffect } from "react";
 import api from "./services/api";
-import { DataProps } from "./types/data";
+import { DataProps, ArticleProps } from "./types/data";
+import { LineChart } from "./components/lineChart";
 
 function App() {
-  const [data, setData] = useState({} as DataProps);
+  const [data, setData] = useState<DataProps | null>(null);
   const [keyword, setKeyword] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
+  const [chartData, setChartData] = useState<{ date: string, count: number }[]>([]);
 
   async function getApiData(keyword: string, startDate: string, endDate: string) {
     try {
-      console.log(startDate + " " + endDate)
       const url = `/v2/everything?q=${keyword}&from=${startDate}&to=${endDate}&apiKey=${import.meta.env.VITE_API_KEY}`;
-      console.log(url)
+      console.log(url);
       const response = await api.get(url);
       setData(response.data);
-      console.log(data)
     } catch (e) {
       console.error(e);
     }
   }
+
+  useEffect(() => {
+    if (data) {
+      const articlesByDate = data.articles.reduce((acc: Record<string, number>, article: ArticleProps) => {
+        const date = article.publishedAt.split('T')[0];
+        if (!acc[date]) {
+          acc[date] = 0;
+        }
+        acc[date]++;
+        return acc;
+      }, {});
+
+      const processedData = Object.keys(articlesByDate)
+        .map(date => ({
+          date,
+          count: articlesByDate[date]
+        }))
+        .filter(dataPoint => dataPoint.date !== '1970-01-01') // remove a data de 1970-01-01 que estava vindo da API
+        .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+
+      setChartData(processedData);
+    }
+  }, [data]);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -51,6 +74,8 @@ function App() {
         />
         <button type="submit">Enviar</button>
       </form>
+
+      <LineChart data={chartData} />
     </main>
   );
 }
