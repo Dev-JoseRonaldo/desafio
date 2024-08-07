@@ -9,7 +9,7 @@ export default function Search({HandleSearchArticlesByKeyWord}: SearchProps) {
   const [text, setText] = useState('');
 
   return (
-    <View className='px-8 flex-row justify-between items-center gap-[3px]'>
+    <View className='px-4 flex-row justify-between items-center gap-[4px] min-h-[40px]'>
       <TextInput 
         placeholder='Palavra-chave' 
         className='text-sm px-2 rounded border-2 border-solid border-gray-400 w-full py-[4px]'
